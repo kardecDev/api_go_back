@@ -27,6 +27,7 @@ func main() {
 			slog.String("pakage", "main"))
 		return
 	}
+
 	dbConnection, err := database.NewDBConnection()
 	if err != nil {
 		slog.Error("Error to connect to database",
@@ -46,6 +47,7 @@ func main() {
 
 	//init routes
 	routes.InitUserRoutes(router, newUserHandler)
+	routes.InitDocsRoutes(router)
 
 	port := fmt.Sprintf(":%s", env.Env.GoPort)
 	slog.Info(fmt.Sprintf("Server running on port %s", port))
