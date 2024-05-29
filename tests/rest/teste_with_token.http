@@ -1,0 +1,4 @@
+GET http://localhost:8080/user HTTP/1.1
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGVtYWlsLmNvbSIsImV4cCI6MTcxNzAxMDU4OCwiaWQiOiIxIiwibmFtZSI6IkpvaG4ifQ.SbbIqWTkktIRAOp-ia1nXg-tWBQrzl17AJDbkSrfqi4
+
