@@ -1,0 +1,7 @@
+services:
+  apigo:
+      build:
+        context: .
+        dockerfile: .devcontainer/Dockerfile.dev
+      volumes:
+        - .:/app:cached

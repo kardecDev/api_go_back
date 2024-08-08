@@ -24,7 +24,6 @@ import (
 //	@Failure		400	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
 //	@Router			/user [get]
-
 func (h *handler) CreateUser(w http.ResponseWriter, r *http.Request) {
 	var req dto.CreateUserDto
 
@@ -129,6 +128,12 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		if err.Error() == "cep not found" {
+			w.WriteHeader(http.StatusNotFound)
+			msg := httperr.NewNotFoundError("cep not found")
+			json.NewEncoder(w).Encode(msg)
+			return
+		}
 		w.WriteHeader(http.StatusInternalServerError)
 		msg := httperr.NewBadRequestError("error to update user")
 		json.NewEncoder(w).Encode(msg)
@@ -150,7 +155,6 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 //	@Failure		404	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
 //	@Router			/user/{id} [get]
-
 func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	user, err := utils.DecodeJwt(r)
 	if err != nil {
@@ -193,7 +197,6 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 //	@Failure		404	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
 //	@Router			/user/{id} [delete]
-
 func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	user, err := utils.DecodeJwt(r)
 	if err != nil {
@@ -233,7 +236,6 @@ func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 //	@Failure		404	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
 //	@Router			/user [get]
-
 func (h *handler) FindManyUsers(w http.ResponseWriter, r *http.Request) {
 	res, err := h.service.FindManyUsers(r.Context())
 	if err != nil {
@@ -269,7 +271,6 @@ func (h *handler) FindManyUsers(w http.ResponseWriter, r *http.Request) {
 //	@Failure		400	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
 //	@Router			/user/password/{id} [get]
-
 func (h *handler) UpdateUserPassword(w http.ResponseWriter, r *http.Request) {
 	var req dto.UpdateUserPasswordDto
 

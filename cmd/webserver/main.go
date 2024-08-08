@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi"
 	logger "github.com/kardecDev/api_go_back/config"
 	"github.com/kardecDev/api_go_back/config/env"
+	_ "github.com/kardecDev/api_go_back/docs"
 	"github.com/kardecDev/api_go_back/internal/database"
 	"github.com/kardecDev/api_go_back/internal/database/sqlc"
 	"github.com/kardecDev/api_go_back/internal/handler/routes"
