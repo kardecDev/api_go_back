@@ -154,7 +154,7 @@ func (h *handler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 //	@Failure		400	{object}	httperr.RestErr
 //	@Failure		404	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
-//	@Router			/user/{id} [get]
+//	@Router			/user [get]
 func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 	user, err := utils.DecodeJwt(r)
 	if err != nil {
@@ -196,7 +196,7 @@ func (h *handler) GetUserByID(w http.ResponseWriter, r *http.Request) {
 //	@Failure		400	{object}	httperr.RestErr
 //	@Failure		404	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
-//	@Router			/user/{id} [delete]
+//	@Router			/user [delete]
 func (h *handler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 	user, err := utils.DecodeJwt(r)
 	if err != nil {
@@ -270,7 +270,7 @@ func (h *handler) FindManyUsers(w http.ResponseWriter, r *http.Request) {
 //	@Success		200
 //	@Failure		400	{object}	httperr.RestErr
 //	@Failure		500	{object}	httperr.RestErr
-//	@Router			/user/password/{id} [get]
+//	@Router			/user/password [get]
 func (h *handler) UpdateUserPassword(w http.ResponseWriter, r *http.Request) {
 	var req dto.UpdateUserPasswordDto
 

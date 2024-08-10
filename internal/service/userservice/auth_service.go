@@ -30,7 +30,7 @@ func (s *service) Login(ctx context.Context, u dto.LoginDTO) (*response.UserAuth
 	}
 
 	// compare password with password in database
-	err = bcrypt.CompareHashAndPassword([]byte(userPass.Password), []byte(u.Password))
+	err = bcrypt.CompareHashAndPassword([]byte(userPass), []byte(u.Password))
 	if err != nil {
 		slog.Error("invalid password", slog.String("package", "userservice"))
 		return nil, errors.New("invalid password")

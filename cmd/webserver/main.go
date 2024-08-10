@@ -23,9 +23,7 @@ func main() {
 	slog.Info("Starting API") //Level logs: Info, Error, Debug, Warm
 	_, err := env.LoadingConfig(".")
 	if err != nil {
-		slog.Error("Failed to load enviroment variables",
-			err,
-			slog.String("pakage", "main"))
+		slog.Error("failed to load enviroment variables", slog.String("error", err.Error()), slog.String("pakage", "main"))
 		return
 	}
 
@@ -55,6 +53,6 @@ func main() {
 	err = http.ListenAndServe(port, router)
 
 	if err != nil {
-		slog.Error("Error to start server", err, slog.String("package", "main"))
+		slog.Error("Error to start server", slog.String("error", err.Error()), slog.String("package", "main"))
 	}
 }

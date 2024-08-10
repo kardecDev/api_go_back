@@ -10,6 +10,7 @@ import (
 
 func InitUserRoutes(router chi.Router, h userhandler.UserHandler) {
 	router.Use(midleware.LoggerData)
+
 	router.Post("/user", h.CreateUser)
 
 	router.Route("/", func(r chi.Router) {
@@ -21,7 +22,7 @@ func InitUserRoutes(router chi.Router, h userhandler.UserHandler) {
 		r.Get("/user", h.GetUserByID)
 		r.Delete("/user", h.DeleteUser)
 		r.Get("/user/list-all", h.FindManyUsers)
-		r.Patch("/user/password/", h.UpdateUserPassword)
+		r.Patch("/user/password", h.UpdateUserPassword)
 	})
 
 	router.Route("/auth", func(r chi.Router) {

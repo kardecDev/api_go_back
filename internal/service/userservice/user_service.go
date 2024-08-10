@@ -18,8 +18,10 @@ import (
 func (s *service) CreateUser(ctx context.Context, u dto.CreateUserDto) error {
 	userExists, err := s.repo.FindUserByEmail(ctx, u.Email)
 	if err != nil {
-		slog.Error("error to search user by email", "err", err, slog.String("package", "userservice"))
-		return err
+		if err != sql.ErrNoRows { // adicione esse if
+			slog.Error("error to search user by email", "err", err, slog.String("package", "userservice"))
+			return err
+		}
 	}
 	if userExists != nil {
 		slog.Error("user already exists", slog.String("package", "userservice"))
@@ -199,13 +201,18 @@ func (s *service) UpdateUserPassword(ctx context.Context, u *dto.UpdateUserPassw
 		slog.Error("error to search user by id", "err", err, slog.String("package", "userservice"))
 		return err
 	}
+
 	if userExists == nil {
 		slog.Error("user not found", slog.String("package", "userservice"))
 		return errors.New("user not found")
 	}
-
+	oldPass, err := s.repo.GetUserPassword(ctx, id)
+	if err != nil {
+		slog.Error("error to get user password", "err", err, slog.String("package", "userservice"))
+		return err
+	}
 	// compare passwords
-	err = bcrypt.CompareHashAndPassword([]byte(userExists.Password), []byte(u.OldPassword))
+	err = bcrypt.CompareHashAndPassword([]byte(oldPass), []byte(u.OldPassword))
 	if err != nil {
 		slog.Error("invalid password", slog.String("package", "userservice"))
 		return errors.New("invalid password")
